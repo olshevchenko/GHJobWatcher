@@ -1,0 +1,23 @@
+<resources>
+    <dimen name="appBarSize">160dp</dimen>
+
+    <dimen name="element_elevation">6dp</dimen>
+
+    <!-- Default margins, per the Android Design guidelines. -->
+    <dimen name="detail_view_margin">8dp</dimen>
+    <dimen name="detail_divider_margin">4dp</dimen>
+
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="card_list_view_margin">8dp</dimen>
+    <dimen name="singer_cover_small_size">150dp</dimen>
+    <dimen name="singer_cover_big_size">1000px</dimen> <!-- size for big one is in px -->
+    <dimen name="card_list_view_height">166dp</dimen> <!-- (singer_cover_small_size) + 2*(card_list_view_margin) -->
+    <dimen name="ctb_expanded_title_marginBottom">32dp</dimen>
+    <dimen name="ctb_expanded_title_marginEnd">64dp</dimen>
+    <dimen name="ctb_expanded_title_marginStart">48dp</dimen>
+
+    <dimen name="detail_padding">16dp</dimen>
+
+</resources>

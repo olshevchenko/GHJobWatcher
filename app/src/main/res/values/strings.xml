@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GHJobWatcher</string>
+    <string name="list_fragment_label">Job list</string>
+    <string name="detail_fragment_label">Job detail</string>
+    <string name="how_to_apply">How to apply:</string>
+    <string name="action_reload">Reload jobs</string>
+</resources>
