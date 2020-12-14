@@ -13,7 +13,11 @@
         tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_showDetail"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/fadein"
+            app:exitAnim="@anim/fadeout"
+            app:popUpTo="@+id/detailFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="selectedJob"
             app:argType="com.olshevchenko.ghjobwatcher.GitHubJob" />
@@ -27,6 +31,13 @@
         <argument
             android:name="selectedJob"
             app:argType="com.olshevchenko.ghjobwatcher.GitHubJob" />
+        <action
+            android:id="@+id/action_leaveDetail"
+            app:destination="@id/listFragment"
+            app:enterAnim="@anim/fadein"
+            app:exitAnim="@anim/fadeout"
+            app:popUpTo="@+id/listFragment"
+            app:popUpToInclusive="true"></action>
     </fragment>
 
 </navigation>

@@ -5,10 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="job"
-            type="com.olshevchenko.ghjobwatcher.GitHubJob"/>
+            type="com.olshevchenko.ghjobwatcher.GitHubJob" />
+
+        <variable
+            name="clickListener"
+            type="com.olshevchenko.ghjobwatcher.list.JobClickListener" />
     </data>
 
     <ScrollView
@@ -19,12 +25,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onClick(job)}"
             android:padding="@dimen/detail_padding">
 
             <TextView
-                android:id="@+id/tv_job_cr_date_time"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_job_cr_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@{job.createdMNDateString}"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="16sp"
@@ -32,7 +40,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Creation Date/Time" />
+                tools:text="Creation Date" />
 
             <TextView
                 android:id="@+id/tv_job_title"
@@ -44,7 +52,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_cr_date_time"
+                app:layout_constraintTop_toBottomOf="@id/tv_job_cr_date"
                 tools:text="Title" />
 
             <TextView

@@ -22,8 +22,9 @@ class DetailViewModel(gitHubJob: GitHubJob,
         _selectedJob.value = gitHubJob
     }
 
-    val displayJobTitle = Transformations.map(selectedJob) { it.apiJob.title }
+    val displayCrDate = Transformations.map(selectedJob) { it.createdMNDateString }
     val displayCompany = Transformations.map(selectedJob) { it.apiJob.company }
-    val displayDescription = Transformations.map(selectedJob) { it.apiJob.description }
-    val displayHowToApply = Transformations.map(selectedJob) { it.apiJob.howToApply }
+    val displayHowToApply = Transformations.map(selectedJob) { it.howToApplySpanned }
+    val displayJobTitle = Transformations.map(selectedJob) { it.apiJob.title }
+    val displayDescription = Transformations.map(selectedJob) { it.descriptionSpanned }
 }

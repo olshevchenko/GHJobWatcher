@@ -13,10 +13,11 @@ This is a test App to operate with GitHub API using new features of Android deve
 * Async w. Kotlin Coroutines
 * GitHub API
 
+ToDo
+----
+
 Introduction
 ------------
 
 Getting Started
 ---------------
-
-

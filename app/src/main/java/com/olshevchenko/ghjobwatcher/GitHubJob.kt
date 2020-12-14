@@ -1,5 +1,6 @@
 package com.olshevchenko.ghjobwatcher
 
+import android.os.Build
 import android.os.Parcelable
 import android.text.Html
 import android.text.Html.FROM_HTML_MODE_LEGACY
@@ -9,9 +10,6 @@ import com.olshevchenko.ghjobwatcher.network.GitHubApiJob
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
-import java.io.FileDescriptor
-import java.io.UnsupportedEncodingException
-import java.net.URLDecoder
 import java.text.ParseException
 import java.util.*
 
@@ -37,7 +35,7 @@ class GitHubJob(
         } catch (e: ParseException) {
             Log.w(
                 "GitHubJob",
-                "Job id ${apiJob.id} 'created_at' date parsing error => use current date.."
+                "Job id ${apiJob.id} 'created_at' date parsing error (${e}) => use current date.."
             )
             _date = Date()
         }
@@ -53,7 +51,7 @@ class GitHubJob(
     init {
         createdMNDateString = GitHubDateUtils.formatToHomemadeDate(createdMNDate)
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             howToApplySpanned = Html.fromHtml(apiJob.howToApply, FROM_HTML_MODE_LEGACY)
             descriptionSpanned = Html.fromHtml(apiJob.description, FROM_HTML_MODE_LEGACY)
         } else {

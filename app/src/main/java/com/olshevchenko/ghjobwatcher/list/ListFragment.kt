@@ -37,7 +37,7 @@ class ListFragment : Fragment() {
 
         // set the adapter of the jobsList RecyclerView with clickHandler lambda to tell
         // the viewModel ab't click on job item
-        dataBinding.rvJobsList.adapter = JobListAdapter(JobListAdapter.OnClickListener {
+        dataBinding.rvJobsList.adapter = JobListAdapter(JobClickListener {
             _viewModel.displayJobDetails(it)
         })
 
