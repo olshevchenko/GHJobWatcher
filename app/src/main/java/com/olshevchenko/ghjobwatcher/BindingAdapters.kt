@@ -4,12 +4,24 @@ import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.olshevchenko.ghjobwatcher.list.GitHubApiStatus
 import com.olshevchenko.ghjobwatcher.list.JobListAdapter
-import com.olshevchenko.ghjobwatcher.GitHubJob
-import kotlinx.android.synthetic.main.fragment_list.*
+import com.olshevchenko.ghjobwatcher.utils.GlideWrapper
+
+
+@BindingAdapter("imageUrl")
+fun bindImage(view: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        GlideWrapper().loadImage(view, it, view.context)
+    }
+}
+
+@BindingAdapter("cachedImageUrl")
+fun bindCachedImage(view: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        GlideWrapper().loadCachedImage(view, imgUrl)
+    }
+}
 
 /**
  * Hide the RecyclerView when there is no GitHub jobs data
@@ -24,31 +36,30 @@ fun bindRecyclerView(listRecyclerView: RecyclerView, data: List<GitHubJob>?) {
  * Control SwipeRefreshLayout's refresh progress engine depending on the GitHubApiStatus value
  */
 @BindingAdapter("gitHubApiStatus")
-fun bindStatus(refreshLayout: SwipeRefreshLayout, status: GitHubApiStatus?) {
-    when (status) {
-        GitHubApiStatus.LOADING -> refreshLayout.isRefreshing = true
-        GitHubApiStatus.ERROR -> refreshLayout.isRefreshing = false
-        GitHubApiStatus.DONE -> refreshLayout.isRefreshing = false
+fun bindStatus(refreshLayout: SwipeRefreshLayout, state: GitHubApiState?) {
+    when (state?.status) {
+        GitHubApiState.Status.LOADING -> refreshLayout.isRefreshing = true
+        GitHubApiState.Status.ERROR -> refreshLayout.isRefreshing = false
+        GitHubApiState.Status.DONE -> refreshLayout.isRefreshing = false
     }
 }
 
 /**
  * Display the GitHubApiStatus of the network request in an image view during processing
- * (loading_animation or broken image if connection failed).
+ * (broken image if connection failed).
  * Hide the status image when the request is finished.
  */
 @BindingAdapter("gitHubApiStatus")
-fun bindStatus(statusImageView: ImageView, status: GitHubApiStatus?) {
-    when (status) {
-        GitHubApiStatus.LOADING -> {
-//            statusImageView.visibility = View.VISIBLE
-//            statusImageView.setImageResource(R.drawable.loading_animation)
+fun bindStatus(statusImageView: ImageView, state: GitHubApiState?) {
+    when (state?.status) {
+        GitHubApiState.Status.LOADING -> {
+            statusImageView.visibility = View.GONE
         }
-        GitHubApiStatus.ERROR -> {
+        GitHubApiState.Status.ERROR -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.ic_connection_error)
         }
-        GitHubApiStatus.DONE -> {
+        GitHubApiState.Status.DONE -> {
             statusImageView.visibility = View.GONE
         }
     }

@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.olshevchenko.ghjobwatcher.databinding.FragmentDetailBinding
 
-/** The fragment shows the full vacation description */
+/**
+ * The fragment shows the full vacation description
+ */
 class DetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,

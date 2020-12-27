@@ -20,96 +20,145 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/detail_padding">
 
-            <TextView
-                android:id="@+id/tv_job_cr_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@{viewModel.displayCrDate}"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+            <ImageView
+                android:id="@+id/iv_company_logo"
+                android:layout_width="@dimen/logoImgListSize"
+                android:layout_height="@dimen/logoImgListSize"
+                app:cachedImageUrl="@{viewModel.selectedJob.companyLogoUrl}"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Creation Date" />
+                app:srcCompat="@drawable/ic_broken_image"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/tv_job_company"
+                android:id="@+id/tv_company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/detail_view_margin"
-                android:text="@{viewModel.displayCompany}"
+                android:text="@{viewModel.selectedJob.companyName}"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_cr_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_company_logo"
                 tools:text="Company" />
 
             <TextView
-                android:id="@+id/tv_job_howtoapply_title"
+                android:id="@+id/tv_company_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{viewModel.selectedJob.companyUrl}"
+                android:textColor="@color/colorSecondaryVariant"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_company_name"
+                tools:text="www.abd.def" />
+
+            <View
+                android:id="@+id/v_details_divider1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/detail_view_margin"
+                android:background="?attr/colorOnSurface"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_company_url" />
+
+            <TextView
+                android:id="@+id/tv_howtoapply_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/detail_view_margin"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:layout_marginEnd="@dimen/detail_view_margin"
                 android:text="@string/how_to_apply"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_company" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/detail_divider_margin"
-                android:background="?attr/colorOnSurface"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_howtoapply_title" />
+                app:layout_constraintTop_toBottomOf="@id/v_details_divider1" />
 
             <TextView
-                android:id="@+id/tv_job_howtoapply"
+                android:id="@+id/tv_howtoapply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/detail_view_margin"
-                android:text="@{viewModel.displayHowToApply}"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:text="Please submit Your application through our company website.."
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_job_howtoapply_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_howtoapply_title"
                 tools:text="How to apply text" />
+
+            <View
+                android:id="@+id/v_details_divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/detail_view_margin"
+                android:background="?attr/colorOnSurface"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_howtoapply" />
 
             <TextView
                 android:id="@+id/tv_job_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/detail_view_margin"
-                android:text="@{viewModel.displayJobTitle}"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:layout_marginEnd="@dimen/detail_view_margin"
+                android:text="@{viewModel.selectedJob.jobTitle}"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_howtoapply"
+                app:layout_constraintTop_toBottomOf="@id/v_details_divider2"
                 tools:text="Title" />
 
-            <View
-                android:id="@+id/v_details_divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/detail_divider_margin"
-                android:background="?attr/colorOnSurface"
+            <TextView
+                android:id="@+id/tv_job_cr_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:layout_marginEnd="@dimen/detail_view_margin"
+                android:layout_marginBottom="@dimen/detail_view_margin"
+                android:text="@{`[` + viewModel.selectedJob.createdMNDateString + `]`}"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_job_title"
+                tools:text="[01/01/2021]" />
+
+            <TextView
+                android:id="@+id/tv_job_empltype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:layout_marginEnd="@dimen/detail_view_margin"
+                android:background="@color/emplTypeBackground"
+                android:text="@{viewModel.selectedJob.employmentType}"
+                android:textColor="@color/emplTypeColor"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_job_cr_date"
+                tools:text="Full Time" />
 
             <TextView
                 android:id="@+id/tv_job_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/detail_view_margin"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:layout_marginEnd="@dimen/detail_view_margin"
                 android:text="@{viewModel.displayDescription}"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_job_cr_date"
                 tools:text="Description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

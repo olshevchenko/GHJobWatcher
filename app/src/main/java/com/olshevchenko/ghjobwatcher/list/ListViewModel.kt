@@ -1,17 +1,18 @@
 package com.olshevchenko.ghjobwatcher.list
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.olshevchenko.ghjobwatcher.GitHubDateUtils
+import com.olshevchenko.ghjobwatcher.GitHubApiState
 import com.olshevchenko.ghjobwatcher.GitHubJob
 import com.olshevchenko.ghjobwatcher.network.GitHubApi
 import com.olshevchenko.ghjobwatcher.network.GitHubApiJob
+import com.olshevchenko.ghjobwatcher.utils.GitHubDateUtils
 import kotlinx.coroutines.launch
+import java.text.ParseException
 
-
-enum class GitHubApiStatus { LOADING, ERROR, DONE }
 
 /**
  * ViewModel attached to the ListFragment
@@ -19,11 +20,11 @@ enum class GitHubApiStatus { LOADING, ERROR, DONE }
 class ListViewModel : ViewModel() {
 
     /** Internal mut. LiveData status that stores the state of most recent request */
-    private val _status = MutableLiveData<GitHubApiStatus>()
+    private val _state = MutableLiveData<GitHubApiState>()
 
     /** EXTERNAL IMMUT. LiveData for the request status */
-    val status: LiveData<GitHubApiStatus>
-        get() = _status
+    val state: LiveData<GitHubApiState>
+        get() = _state
 
     /** Internal mut. LiveData List that stores the most recent response */
     private val _jobs = MutableLiveData<List<GitHubJob>>()
@@ -38,7 +39,7 @@ class ListViewModel : ViewModel() {
         get() = _navigateToSelectedJob
 
     init {
-        reloadJobs() // call immediately on start to get status & fresh list content
+        reloadJobs() // call immediately on start to get state & fresh list content
     }
 
     /**
@@ -57,23 +58,38 @@ class ListViewModel : ViewModel() {
      * - fill corresponding GitHubJob item
      * - calculate dates fields & visibility flag
      */
-    private fun convertApiJobs(jobsApiList: List<GitHubApiJob>): MutableList<GitHubJob> {
-        var jobsList: MutableList<GitHubJob> = ArrayList()
-        var prevJob: GitHubJob? = null
+    private fun convertApiJobs(jobApiList: List<GitHubApiJob>): MutableList<GitHubJob> {
+        var jobList: MutableList<GitHubJob> = ArrayList()
+        var job: GitHubJob
 
-        for (jobApi in jobsApiList) {
-            var job = GitHubJob(jobApi)
+        for (jobApi in jobApiList) {
+            try {
+                job = GitHubJob(jobApi)
+            } catch (e: ParseException) {
+                Log.w(
+                    "convertApiJobs()",
+                    "Got incorrect job from server (${e.message}) => skipping it.."
+                )
+                continue //ignore job without ID
+            }
+            jobList.add(job)
+        }
+
+        jobList.sortByDescending { it.createdMNDate } // sort jobs from recent downto older ones
+
+        /** loop through the jobs to define date visibility for each job */
+        var prevJob: GitHubJob? = null
+        for (job in jobList) {
             if (null == prevJob)
-                // always show Date of the 1'st item
+            // always show Date of the 1'st item
                 job.isDateVisible = true
             else {
                 // show Date in UI if it differs from previous ones
                 job.isDateVisible = (job.createdMNDate != prevJob.createdMNDate)
             }
-            jobsList.add(job)
             prevJob = job
         }
-        return jobsList
+        return jobList
     }
 
     /**
@@ -83,13 +99,13 @@ class ListViewModel : ViewModel() {
      */
     private fun getGitHubJobs() {
         viewModelScope.launch {
-            _status.value = GitHubApiStatus.LOADING
+            _state.value = GitHubApiState.RUNNING
             try {
                 val jobsApiList = GitHubApi.retrofitService.getApiJobs(0) // ToDo add pagination later!
                 _jobs.value = convertApiJobs(jobsApiList)
-                _status.value = GitHubApiStatus.DONE
+                _state.value = GitHubApiState.OK
             } catch (e: Exception) {
-                _status.value = GitHubApiStatus.ERROR
+                _state.value = GitHubApiState.error(e.message)
                 _jobs.value = ArrayList()
             }
         }

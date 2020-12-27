@@ -26,80 +26,91 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{() -> clickListener.onClick(job)}"
-            android:padding="@dimen/detail_padding">
-
-            <TextView
-                android:id="@+id/tv_job_cr_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@{job.createdMNDateString}"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="16sp"
-                android:visibility="@{job.isDateVisible? View.VISIBLE : View.INVISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Creation Date" />
-
-            <TextView
-                android:id="@+id/tv_job_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/detail_view_margin"
-                android:text="@{job.apiJob.title}"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_cr_date"
-                tools:text="Title" />
-
-            <TextView
-                android:id="@+id/tv_job_company"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/detail_view_margin"
-                android:textStyle="bold"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_title"
-                android:text="@{job.apiJob.company}"
-                tools:text="Company" />
-
-            <TextView
-                android:id="@+id/tv_job_howtoapply_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/detail_view_margin"
-                android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_job_company"
-                android:text="@string/how_to_apply" />
-
-            <TextView
-                android:id="@+id/tv_job_howtoapply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/detail_view_margin"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_job_howtoapply_title"
-                android:text="@{job.howToApplySpanned}"
-                tools:text="How to apply text" />
+            android:paddingTop="@dimen/detail_top_padding"
+            android:paddingBottom="@dimen/detail_bottom_padding">
 
             <View
                 android:id="@+id/v_item_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/detail_view_margin"
                 android:background="?attr/colorOnSurface"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_job_howtoapply" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_job_cr_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{job.createdMNDateString}"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorOnPrimary"
+                android:textSize="12sp"
+                android:visibility="@{job.isDateVisible? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_item_divider"
+                tools:text="Creation Date" />
+
+            <ImageView
+                android:id="@+id/iv_company_logo"
+                android:layout_width="@dimen/logoImgListSize"
+                android:layout_height="@dimen/logoImgListSize"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:layout_marginTop="@dimen/detail_view_margin"
+                app:imageUrl="@{job.companyLogoUrl}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_job_cr_date"
+                app:srcCompat="@drawable/ic_broken_image"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/tv_job_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:layout_marginEnd="@dimen/detail_view_margin"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{job.jobTitle}"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_company_logo"
+                app:layout_constraintTop_toTopOf="@id/iv_company_logo"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/tv_job_company"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/detail_view_margin"
+                android:layout_marginEnd="@dimen/detail_view_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{`(` + job.companyName + `)`}"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_company_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_company_logo"
+                tools:text="(Company)" />
+
+            <TextView
+                android:id="@+id/tv_job_empltype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/detail_view_margin"
+                android:background="@color/emplTypeBackground"
+                android:text="@{job.employmentType}"
+                android:textColor="@color/emplTypeColor"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/tv_job_company"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Full Time" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

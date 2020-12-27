@@ -1,8 +1,7 @@
-package com.olshevchenko.ghjobwatcher
+package com.olshevchenko.ghjobwatcher.utils
 
 import android.util.Log
 import org.apache.commons.lang3.time.DateUtils
-import org.jetbrains.annotations.TestOnly
 import java.text.SimpleDateFormat
 import java.util.*
 

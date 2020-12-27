@@ -1,20 +1,19 @@
 package com.olshevchenko.ghjobwatcher.network
 
 import android.os.Parcelable
-import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class GitHubApiJob(
-        val id: String,
-//        @Json(name = "type") private val employmentType: String,
-//        @Json(name = "url") private val jobUrl: String,
-        @Json(name = "created_at") val _createdAt: String,
-        val company: String = "N/A",
-//        @Json(name = "company_url") private val companyUrl: String,
-//        private val location: String,
-        val title: String = "N/A",
-        val description: String = "N/A",
-        @Json(name = "how_to_apply") val howToApply: String = "N/A",
-//        private val companyLogo: String
+    val id: String?,
+    val type: String?,
+//    @Json(name = "url")
+    val created_at: String?,
+    val company: String?,
+    val company_url: String?,
+//    @Json(name = "location")
+    val title: String?,
+    val description: String?,
+    val how_to_apply: String?,
+    val company_logo: String?
 ) : Parcelable

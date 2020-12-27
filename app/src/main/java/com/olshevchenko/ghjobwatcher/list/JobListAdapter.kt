@@ -20,7 +20,7 @@ class JobListAdapter(val clickListener: JobClickListener) :
 
     /**
      * The GitHubJobViewHolder constructor takes the binding variable from the associated
-     * GridViewItem, which nicely gives it access to the full [GitHubJob] information.
+     * ListViewItem, which nicely gives it access to the full [GitHubJob] information.
      */
     class GitHubJobViewHolder(private var binding: ListViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -41,7 +41,7 @@ class JobListAdapter(val clickListener: JobClickListener) :
         }
 
         override fun areContentsTheSame(oldItem: GitHubJob, newItem: GitHubJob): Boolean {
-            return oldItem.apiJob.id == newItem.apiJob.id
+            return oldItem.id == newItem.id
         }
     }
 

@@ -2,10 +2,12 @@ package com.olshevchenko.ghjobwatcher.list
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.olshevchenko.ghjobwatcher.GitHubApiState
 import com.olshevchenko.ghjobwatcher.R
 import com.olshevchenko.ghjobwatcher.databinding.FragmentListBinding
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -50,6 +52,17 @@ class ListFragment : Fragment() {
                 this.findNavController().navigate(ListFragmentDirections.actionShowDetail(it))
                 // Tell the ViewModel we've made the navigate call to prevent multiple navigation
                 _viewModel.displayJobDetailsComplete()
+            }
+        })
+
+        // Observe the status LiveData and show Toast when it's in error state
+        _viewModel.state.observe(viewLifecycleOwner, Observer {
+            if (it.status == GitHubApiState.Status.ERROR) {
+                Toast.makeText(
+                    context,
+                    "Error loading jobs: ${it.msg}. Check network connection and refresh list.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
